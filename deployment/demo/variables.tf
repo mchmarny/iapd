@@ -1,9 +1,3 @@
-variable "git_repo" {
-  description = "GitHub Repo"
-  type        = string
-  default     = "mchmarny/vul"
-}
-
 variable "config_secret_version" {
   description = "secret manager version to use"
   type        = string
