@@ -1,10 +1,6 @@
-variable "name" {
-  description = "Service name (iapd == Identity Aware Proxy Demo)"
-  type        = string
-  default     = "iapd"
-}
+# Description: Variables for the deployment
 
-variable "project_id" {
+variable "project" {
   description = "GCP Project ID"
   type        = string
   nullable    = false
@@ -16,13 +12,13 @@ variable "domain" {
   nullable    = false
 }
 
-variable "image" {
-  description = "container image to deploy"
+variable "name" {
+  description = "Service name (iapd == Identity Aware Proxy Demo)"
   type        = string
-  nullable    = false
+  default     = "iapd"
 }
 
-variable "rate_limit_threshold_count_per_min" {
+variable "rate_limit_threshold_min" {
   description = "Request rate limit threshold per minute"
   type        = number
   default     = 100

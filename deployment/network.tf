@@ -2,29 +2,27 @@
 module "lb-http" {
   source  = "GoogleCloudPlatform/lb-http/google//modules/serverless_negs"
   version = "9.0.0"
-
-  project = data.template_file.project_id.rendered
-  name    = "${data.template_file.name.rendered}-lb-http"
+  name    = var.name
 
   create_address = false
   address        = google_compute_global_address.http_lb_address.address
 
   ssl                             = true
-  managed_ssl_certificate_domains = [data.template_file.app_domain.rendered]
+  managed_ssl_certificate_domains = [var.domain]
   https_redirect                  = true
 
   backends = {
     default = {
-      description             = null
-      enable_cdn              = false
-      security_policy         = google_compute_security_policy.policy.name
-      edge_security_policy    = null
-      custom_request_headers  = null
-      custom_response_headers = null
-      compression_mode        = null
-      protocol                = "HTTPS"
-      port_name               = "http"
-      compression_mode        = "DISABLED"
+      description                     = null
+      enable_cdn                      = false
+      security_policy                 = google_compute_security_policy.policy.name
+      edge_security_policy            = null
+      custom_request_headers          = null
+      custom_response_headers         = null
+      compression_mode                = null
+      protocol                        = "HTTPS"
+      port_name                       = "http"
+      compression_mode                = "DISABLED"
       connection_draining_timeout_sec = 300
 
       groups = [
@@ -54,9 +52,9 @@ module "lb-http" {
 
 # Region network endpoint group for Cloud Run sercice in that region
 resource "google_compute_region_network_endpoint_group" "serverless_neg" {
-  name                  = "${data.template_file.name.rendered}-neg"
+  name                  = var.name
   network_endpoint_type = "SERVERLESS"
-  region                = data.template_file.location.rendered
+  region                = var.regions[0]
 
   cloud_run {
     service = google_cloud_run_service.app.name

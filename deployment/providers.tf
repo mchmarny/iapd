@@ -19,10 +19,10 @@ terraform {
 
 # Configure the Google Cloud provider
 provider "google" {
-  project = data.template_file.project_id.rendered
+  project = var.project
 }
 
 # Configure the beta version of Google Cloud provider
 provider "google-beta" {
-  project = data.template_file.project_id.rendered
+  project = var.project
 }

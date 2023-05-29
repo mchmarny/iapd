@@ -4,7 +4,6 @@
 locals {
   services = [
     "artifactregistry.googleapis.com",
-    "cloudbuild.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "compute.googleapis.com",
     "container.googleapis.com",
@@ -12,12 +11,9 @@ locals {
     "iamcredentials.googleapis.com",
     "monitoring.googleapis.com",
     "run.googleapis.com",
-    "secretmanager.googleapis.com",
     "servicecontrol.googleapis.com",
     "servicemanagement.googleapis.com",
     "servicenetworking.googleapis.com",
-    "sql-component.googleapis.com",
-    "sqladmin.googleapis.com",
     "stackdriver.googleapis.com",
   ]
 }
@@ -53,14 +49,6 @@ resource "google_project_service" "service_networking" {
   provider = google-beta
   project  = data.template_file.project_id.rendered
   service  = "servicenetworking.googleapis.com"
-
-  disable_on_destroy = true
-}
-
-resource "google_project_service" "build_service" {
-  provider = google-beta
-  project  = data.template_file.project_id.rendered
-  service  = "cloudbuild.googleapis.com"
 
   disable_on_destroy = true
 }

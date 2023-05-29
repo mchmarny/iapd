@@ -1,11 +1,29 @@
-VERSION    :=$(shell cat .version)
+VERSION  :=$(shell cat .version)
+REPO     :=$(shell git config --get remote.origin.url | cut -d: -f2 | cut -d. -f1)
+USER     :=$(shell echo $(REPO) | cut -d/ -f1)
+NAME     :=$(shell echo $(REPO) | cut -d/ -f2)
+PROJECT  :=$(shell gcloud config get-value project)
+REGION   :="us-west1"
+REGISTRY :="$(REGION)-docker.pkg.dev/$(PROJECT)/$(NAME)/app"
 
 all: help
 
-.PHONY: version
-version: ## Prints the current version
-	@echo $(VERSION)
-
+.PHONY: info
+info: ## Prints all variables
+	@echo "version:  $(VERSION)"
+	@echo "repo:     $(REPO)"
+	@echo "user:     $(USER)"
+	@echo "name:     $(NAME)"
+	@echo "region:   $(REGION)"
+	@echo "project:  $(PROJECT)"
+	@echo "registry: $(REGISTRY)
+	
+.PHONY: repo
+repo: ## Updates the go modules and vendors all dependancies 
+	gcloud artifacts repositories create $(NAME) \
+		--repository-format docker \
+		--location $(REGION)
+		
 .PHONY: tidy
 tidy: ## Updates the go modules and vendors all dependancies 
 	go mod tidy
@@ -26,6 +44,15 @@ test: tidy ## Runs unit tests
 lint: ## Lints the entire project using go 
 	golangci-lint -c .golangci.yaml run
 
+.PHONY: app
+app: ## Runs the application locally
+	go run internal/cmd/app/main.go
+
+.PHONY: image
+image: tidy lint ## Builds the docker image
+	KO_DOCKER_REPO="$(REGISTRY)" \
+	GOFLAGS="-ldflags=-X=main.version=$(VERSION)" \
+	ko build internal/cmd/app/main.go --image-refs .digest --bare --tags $(VERSION),latest
 
 .PHONY: vulncheck
 vulncheck: ## Checks for soource vulnerabilities

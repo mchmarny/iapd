@@ -1,7 +1,6 @@
 # Cloud Armor policies 
 resource "google_compute_security_policy" "policy" {
-  name     = "${data.template_file.name.rendered}-security-policy"
-  provider = google-beta
+  name  = "${var.name}-security-policy"
 
   rule {
     action      = "deny(403)"
@@ -91,7 +90,7 @@ resource "google_compute_security_policy" "policy" {
       }
 
       rate_limit_threshold {
-        count        = var.rate_limit_threshold_count_per_min
+        count        = var.rate_limit_threshold_min
         interval_sec = 60
       }
     }
