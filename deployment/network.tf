@@ -28,7 +28,7 @@ module "lb-http" {
 
       groups = [
         {
-          group = google_compute_region_network_endpoint_group.serverless_neg.id
+          group = google_compute_region_network_endpoint_group.serverless_neg[each.key]
         }
       ]
 
