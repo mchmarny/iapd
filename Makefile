@@ -4,19 +4,19 @@ USER     :=$(shell echo $(REPO) | cut -d/ -f1)
 NAME     :=$(shell echo $(REPO) | cut -d/ -f2)
 PROJECT  :=$(shell gcloud config get-value project)
 REGION   :="us-west1"
-REGISTRY :="$(REGION)-docker.pkg.dev/$(PROJECT)/$(NAME)/app"
+IMAGE    :="$(REGION)-docker.pkg.dev/$(PROJECT)/$(NAME)/app"
 
 all: help
 
 .PHONY: info
 info: ## Prints all variables
-	@echo "version:  $(VERSION)"
+	@echo "project:  $(PROJECT)"
+	@echo "region:   $(REGION)"
 	@echo "repo:     $(REPO)"
 	@echo "user:     $(USER)"
 	@echo "name:     $(NAME)"
-	@echo "region:   $(REGION)"
-	@echo "project:  $(PROJECT)"
-	@echo "registry: $(REGISTRY)
+	@echo "image:    $(IMAGE)"
+	@echo "version:  $(VERSION)"
 	
 .PHONY: repo
 repo: ## Updates the go modules and vendors all dependancies 
@@ -50,7 +50,7 @@ app: ## Runs the application locally
 
 .PHONY: image
 image: tidy lint ## Builds the docker image
-	KO_DOCKER_REPO="$(REGISTRY)" \
+	KO_DOCKER_REPO="$(IMAGE)" \
 	GOFLAGS="-ldflags=-X=main.version=$(VERSION)" \
 	ko build internal/cmd/app/main.go --image-refs .digest --bare --tags $(VERSION),latest
 
