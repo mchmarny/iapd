@@ -31,7 +31,7 @@ data "google_compute_network" "default" {
 resource "google_project_service" "default" {
   for_each = toset(local.services)
 
-  project = data.template_file.project_id.rendered
+  project = var.project
   service = each.value
 
   disable_on_destroy = false
@@ -39,7 +39,7 @@ resource "google_project_service" "default" {
 
 resource "google_project_service" "compute_engine" {
   provider = google-beta
-  project  = data.template_file.project_id.rendered
+  project  = var.project
   service  = "compute.googleapis.com"
 
   disable_on_destroy = true
@@ -47,7 +47,7 @@ resource "google_project_service" "compute_engine" {
 
 resource "google_project_service" "service_networking" {
   provider = google-beta
-  project  = data.template_file.project_id.rendered
+  project  = var.project
   service  = "servicenetworking.googleapis.com"
 
   disable_on_destroy = true

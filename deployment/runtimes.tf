@@ -16,15 +16,15 @@ resource "google_service_account" "runner_service_account" {
 # Role binding to allow publisher to publish images
 resource "google_project_iam_member" "runner_role_bindings" {
   for_each = local.runner_roles
-  project  = data.template_file.project_id.rendered
+  project  = var.project
   role     = each.value
   member   = "serviceAccount:${google_service_account.runner_service_account.email}"
 }
 
 # App Cloud Run service 
 resource "google_cloud_run_service" "app" {
-  for_each = toset(var.regions)
-  name                       = var.name
+  for_each                   = toset(var.regions)
+  name                       = "${var.name}--${each.key}"
   location                   = each.value
   autogenerate_revision_name = true
 
@@ -91,9 +91,11 @@ resource "google_cloud_run_service" "app" {
 }
 
 resource "google_cloud_run_service_iam_member" "app_public_access" {
-  location = var.regions[0]
-  project  = var.project
-  service  = google_cloud_run_service.app.name
+  for_each = toset(var.regions)
+
+  location = google_cloud_run_service.app[each.key].location
+  project  = google_cloud_run_service.app[each.key].project
+  service  = google_cloud_run_service.app[each.key].name
   role     = "roles/run.invoker"
   member   = "allUsers"
 }

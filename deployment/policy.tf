@@ -1,6 +1,6 @@
 # Cloud Armor policies 
 resource "google_compute_security_policy" "policy" {
-  name  = "${var.name}-security-policy"
+  name = "${var.name}-security-policy"
 
   rule {
     action      = "deny(403)"

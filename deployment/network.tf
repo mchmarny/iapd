@@ -3,6 +3,7 @@ module "lb-http" {
   source  = "GoogleCloudPlatform/lb-http/google//modules/serverless_negs"
   version = "9.0.0"
   name    = var.name
+  project = var.project
 
   create_address = false
   address        = google_compute_global_address.http_lb_address.address
@@ -52,12 +53,14 @@ module "lb-http" {
 
 # Region network endpoint group for Cloud Run sercice in that region
 resource "google_compute_region_network_endpoint_group" "serverless_neg" {
-  name                  = var.name
+  for_each = toset(var.regions)
+
+  name                  = "${var.name}--neg--${each.key}"
   network_endpoint_type = "SERVERLESS"
-  region                = var.regions[0]
+  region                = google_cloud_run_service.app[each.key].location
 
   cloud_run {
-    service = google_cloud_run_service.app.name
+    service = google_cloud_run_service.app[each.key].name
   }
 }
 
