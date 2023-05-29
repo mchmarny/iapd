@@ -107,7 +107,7 @@ resource "google_cloud_run_service" "app" {
   metadata {
     annotations = {
       "run.googleapis.com/client-name" = "terraform"
-      "run.googleapis.com/ingress"     = var.app_ingress
+      "run.googleapis.com/ingress"     = "internal-and-cloud-load-balancing"
       # all, internal, internal-and-cloud-load-balancing
     }
   }
