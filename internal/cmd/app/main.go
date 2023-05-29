@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/mchmarny/iop/internal/server"
+	"github.com/mchmarny/iapd/internal/server"
 )
 
 var (

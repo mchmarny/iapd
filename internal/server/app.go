@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	name = "iop"
+	name = "iapd"
 )
 
 // Run starts the server and waits for termination signal.

@@ -1,4 +1,4 @@
-# iop
+# iapd
 
 Cloud Run Identity Aware Proxy Demo.
 
@@ -19,8 +19,8 @@ The deploy this solution you will need:
 Start by cloning this repo, and navigate into it:
 
 ```shell
-git clone git@github.com:mchmarny/iop.git
-cd iop
+git clone git@github.com:mchmarny/iapd.git
+cd iapd
 ```
 
 Next, authenticate to GCP:

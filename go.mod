@@ -1,4 +1,4 @@
-module github.com/mchmarny/iop
+module github.com/mchmarny/iapd
 
 go 1.20
 
