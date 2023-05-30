@@ -1,6 +1,6 @@
 # iapd
 
-Cloud Run Identity Aware Proxy Demo.
+Cloud Run Identity Aware Proxy demo, illustrating how to off-load user authentication outside your application.
 
 > WIP: this demo is still being developed. Do not use it yet. 
 
@@ -13,6 +13,12 @@ The deploy this solution you will need:
 * [Terraform CLI](https://www.terraform.io/downloads)
 * [GCP Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
 * [gcloud CLI](https://cloud.google.com/sdk/gcloud) (aka Google Cloud SDK)
+
+### prep
+
+Few manual steps:
+
+https://cloud.google.com/iap/docs/enabling-compute-howto
 
 ### setup
 

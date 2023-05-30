@@ -7,3 +7,7 @@ output "SERVICE_URI" {
 output "SERVICE_IP" {
   value = module.lb-http.external_ip
 }
+
+output "SERVICE_DNA_A_RECORD" {
+  value = "${var.domain}   A   ${module.lb-http.external_ip}"
+}

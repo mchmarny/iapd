@@ -1,6 +1,6 @@
 # Cloud Armor policies 
 resource "google_compute_security_policy" "policy" {
-  name = var.name
+  name     = var.name
   provider = google-beta
 
   rule {
@@ -70,8 +70,8 @@ resource "google_compute_security_policy" "policy" {
   }
 
   rule {
-    action   = "throttle"
-    priority = 2147483647
+    action      = "throttle"
+    priority    = 2147483647
     description = "default rule"
 
     match {
@@ -80,7 +80,7 @@ resource "google_compute_security_policy" "policy" {
         src_ip_ranges = ["*"]
       }
     }
-    
+
     rate_limit_options {
       conform_action = "allow"
       exceed_action  = "deny(429)"

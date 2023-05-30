@@ -60,11 +60,11 @@ vulncheck: ## Checks for soource vulnerabilities
 
 .PHONY: init
 init: ## Initializes all dependancies
-	terraform -chdir=./deployment/demo init
+	terraform -chdir=deployment init
 
 .PHONY: deployment
 deployment: ## Applies Terraform deployment
-	terraform -chdir=./deployment/demo apply -auto-approve
+	terraform -chdir=deployment apply -auto-approve
 
 .PHONY: tag
 tag: ## Creates release tag 

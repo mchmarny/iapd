@@ -15,7 +15,7 @@ func getInfo(r *http.Request) *info {
 		Request: map[string]interface{}{
 			"url":    r.URL.String(),
 			"method": r.Method,
-			"uri":    r.RequestURI,
+			"ip":     getIP(r),
 		},
 		Headers: r.Header,
 		Form:    r.Form,

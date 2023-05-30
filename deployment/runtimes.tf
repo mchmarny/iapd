@@ -48,10 +48,6 @@ resource "google_cloud_run_service" "app" {
           }
         }
         env {
-          name  = "PORT"
-          value = "8080"
-        }
-        env {
           name  = "LOG_LEVEL"
           value = var.log_level
         }

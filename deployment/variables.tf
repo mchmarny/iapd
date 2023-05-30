@@ -18,6 +18,12 @@ variable "name" {
   default     = "iapd"
 }
 
+variable "image" {
+  description = "Demo app image URI (e.g. us-west1-docker.pkg.dev/s3cme1/iapd/app)"
+  type        = string
+  default     = "us-west1-docker.pkg.dev/s3cme1/iapd/app"
+}
+
 variable "rate_limit_threshold_min" {
   description = "Request rate limit threshold per minute"
   type        = number
@@ -34,4 +40,28 @@ variable "log_level" {
   type        = string
   description = "level of logging to use in the container (e.g. panic, fatal, error, warn, info, debug, trace)"
   default     = "info"
+}
+
+variable "support_email" {
+  type        = string
+  description = "Email address for support"
+  nullable    = false
+}
+
+variable "oauth_client_id" {
+  type        = string
+  description = "OAuth Client ID"
+  nullable    = false
+}
+
+variable "oauth_client_secret" {
+  type        = string
+  description = "OAuth Client Secret"
+  nullable    = false
+}
+
+variable "access_members" {
+  type        = list(string)
+  description = "List of members to grant access to the service"
+  default     = []
 }

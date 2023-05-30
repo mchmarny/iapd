@@ -27,15 +27,16 @@ module "lb-http" {
       connection_draining_timeout_sec = 300
 
       groups = [
+        for neg in google_compute_region_network_endpoint_group.serverless_neg :
         {
-          group = google_compute_region_network_endpoint_group.serverless_neg[each.key]
+          group = neg.id
         }
       ]
 
       iap_config = {
-        enable               = false
-        oauth2_client_id     = null
-        oauth2_client_secret = null
+        enable               = true
+        oauth2_client_id     = var.oauth_client_id
+        oauth2_client_secret = var.oauth_client_secret
       }
 
       log_config = {
